@@ -24,26 +24,17 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
         }
-        #black-page {
-            display: none;
-            background: linear-gradient(135deg, #1e0028 0%, #2a0a3a 100%);
-            color: white;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
     </style>
 </head>
 <body>
     <!-- PÁGINA WHITE COM NOTÍCIAS -->
     <div id="white-page">
         <h1>Últimas Notícias</h1>
+        
+        <div class="noticia">
+            <h2>Mel Maia lança nova coleção de roupas</h2>
+            <p>A atriz e influenciadora digital surpreendeu os fãs ao anunciar sua própria linha de moda praia...</p>
+        </div>
         
         <div class="noticia">
             <h2>Anitta anuncia nova turnê internacional</h2>
@@ -58,35 +49,52 @@
         <p><small>Fonte: A Televisão</small></p>
     </div>
 
-    <!-- PÁGINA BLACK (opcional) -->
-    <div id="black-page">
-        <h1>🔞 Conteúdo Exclusivo</h1>
-        <p>Redirecionando para área VIP...</p>
-    </div>
-
     <script>
-        // Verificação melhorada
+        // Verificação simplificada e mais confiável
         function isHumanMobile() {
-            // Dispositivos móveis reais
-            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            // Lista de user agents móveis
+            const mobileAgents = [
+                'Android', 'iPhone', 'iPad', 'iPod', 
+                'BlackBerry', 'IEMobile', 'Opera Mini', 
+                'Mobi', 'Windows Phone'
+            ];
             
-            // Bots conhecidos
-            const isBot = /bot|facebook|google|meta|twitter|slurp|bing/i.test(navigator.userAgent);
+            // Lista de bots conhecidos
+            const botAgents = [
+                'bot', 'facebook', 'google', 'meta',
+                'twitter', 'slurp', 'bing', 'crawler',
+                'spider', 'curl', 'wget', 'validator'
+            ];
+            
+            const userAgent = navigator.userAgent;
+            const isMobile = mobileAgents.some(agent => userAgent.includes(agent));
+            const isBot = botAgents.some(agent => userAgent.includes(agent));
             
             return isMobile && !isBot;
         }
 
-        // Fluxo principal
+        // Redirecionamento com fallback
+        function redirectTo(url) {
+            window.location.href = url;
+            // Fallback caso o redirecionamento falhe
+            setTimeout(() => {
+                if (window.location.href !== url) {
+                    window.location.replace(url);
+                }
+            }, 1000);
+        }
+
+        // Inicia o processo quando o DOM estiver pronto
         document.addEventListener('DOMContentLoaded', function() {
             if (isHumanMobile()) {
-                // Celular (humano): White page → 2s → Quiz
-                setTimeout(function() {
-                    window.location.href = "https://avelino-star.github.io/Quiz/";
+                // Dispositivos móveis reais: vai para o Quiz 1 após 2 segundos
+                setTimeout(() => {
+                    redirectTo("https://avelino-star.github.io/Quiz/");
                 }, 2000);
             } else {
-                // PC/Bots: White page → 3s → A Televisão
-                setTimeout(function() {
-                    window.location.href = "https://www.atelevisao.com";
+                // PCs e bots: vai para A Televisão após 3 segundos
+                setTimeout(() => {
+                    redirectTo("https://www.atelevisao.com");
                 }, 3000);
             }
         });
